@@ -8,11 +8,26 @@ var chartWrapper = d3.select('#my-div')
 
 // Information on sunburst from https://bl.ocks.org/mbostock/4063423
 
-// Initiation of chart
-var chartWrapper = d3.select('#my-div').datum([dataSet]).call(myChart); 
+// Skeleton
+function chart() {
+  var width = 720, // default width
+      height = 80; // default height
 
-// Update a chart parameter and the data (on some event handler)
-myChart.param1(newValue);
-chartWrapper.datum([newDataSet]).call(myChart);
+  function my() {
+    // generate chart here, using `width` and `height`
+  }
 
-var 
+  my.width = function(value) {
+    if (!arguments.length) return width;
+    width = value;
+    return my;
+  };
+
+  my.height = function(value) {
+    if (!arguments.length) return height;
+    height = value;
+    return my;
+  };
+
+  return my;
+};
