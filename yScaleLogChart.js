@@ -1,3 +1,4 @@
+"use strict"
 // Outline of how to render in outside classes
 /*var myChart = chart().param1(value1).param2(value2);
 
@@ -6,10 +7,10 @@ var chartWrapper = d3.select('#my-div')
                 .call(myChart); 
 */
 
-// https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec used heavily
+// Code from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec used heavily
 
 function yScaleLogChart() {
-  // Set defaults
+  // Set arbitrary default values
   var margin = {
       top: 20,
       right: 20,
@@ -20,12 +21,25 @@ function yScaleLogChart() {
   var height = 560; 
   var x = d3.scaleTime().rangeRound([0, width]);
   var y = d3.scaleLog().rangeRound([height, 0]);
-  var colorScale = d3.scaleOrdinal(d3.schemeCategory10) // Sets to preset scale from D3 as default
+  var color = "#228b22" 
+  var lineWidth = 1.5 
 
   function myChart(selection) { // selection = element, data = dataset
     selection.each(function(data) {
       var svg = d3.select(this).selectAll("svg").data([data])
-      
+      // Convert data to standard representation greedily;
+      // this is needed for nondeterministic accessors.
+      data = data.map(function(d, i) {
+        return [xValue.call(data, d, i), yValue.call(data, d, i)];
+      });
+
+      // Update the x-scale.
+      xScale.domain(d3.extent(data, function(d) { return d[0]; }))
+          .rangeRound([0, width]);
+
+      // Update the y-scale.
+      yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
+          .rangeRound([height, 0]);
     })
   }
 
@@ -53,12 +67,29 @@ function yScaleLogChart() {
     return myChart;
   };
 
-  myChart.colors = function(value) {
+  myChart.color = function(value) {
     if(!arguments.length) {
-      return colorScale.range();
+      return color;
     }
-    colorScale.range(value);
+    color = value;
+    return myChart;
+  }
+
+  myChart.lineWidth = function(value) {
+    if(!arguments.length) {
+      return lineWidth;
+    }
+    lineWidth = value;
     return myChart
+  }
+
+  // Accessor functions that DO NOT update, but will return a value if given appropriate input
+  function X(d) { // POSSIBLY REMOVE
+    return xScale(d[0]);
+  }
+
+  function Y(d) {
+    return yScale(d[1]);
   }
 
   return myChart;
