@@ -6,60 +6,64 @@ var chartWrapper = d3.select('#my-div')
                 .call(myChart); 
 */
 
-// Information on treemap from https://bl.ocks.org/mbostock/4063582
-
-function treemap() {
+function yScaleLogChart() {
   // Set defaults
+  var margin = {
+      top: 40,
+      right: 10,
+      bottom: 10,
+      left: 10
+  }
   var width = 800; 
   var height = 800; 
   var colorScale = d3.scaleOrdinal(d3.schemeCategory10) // Sets to preset scale from D3 as default
 
-  function myTreemap(selection) { // selection = element, data = dataset
+  function myChart(selection) { // selection = element, data = dataset
     selection.each(function(data) {
       var svg = d3.select(this).selectAll("svg").data([data])
-      
+
     })
   }
 
-  myTreemap.margin = function(value) {
+  myChart.margin = function(value) {
     if(!arguments.length) {
       return margin;
     }
     margin = value;
-    return myTreemap;
+    return myChart;
   }
 
-  myTreemap.width = function(value) {
+  myChart.width = function(value) {
     if (!arguments.length) {
       return width;
     }
     width = value;
-    return myTreemap;
+    return myChart;
   };
 
-  myTreemap.height = function(value) {
+  myChart.height = function(value) {
     if (!arguments.length) {
       return height;
     }
     height = value;
-    return myTreemap;
+    return myChart;
   };
 
-  myTreemap.colors = function(value) {
+  myChart.colors = function(value) {
     if(!arguments.length) {
       return colorScale.range();
     }
     colorScale.range(value);
-    return myTreemap
+    return myChart
   }
 
-  myTreemap.categories = function(value) {
+  myChart.categories = function(value) {
     if(!arguments.length) {
       return colorScale.domain();
     }
     colorScale.domain(value);
-    return myTreemap
+    return myChart
   }
 
-  return myTreemap;
+  return myChart;
 };
