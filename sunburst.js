@@ -9,25 +9,25 @@ var chartWrapper = d3.select('#my-div')
 // Information on sunburst from https://bl.ocks.org/mbostock/4063423
 
 // Skeleton
-function chart() {
+function sunburst() {
   var width = 720, // default width
       height = 80; // default height
 
-  function my() {
+  function mySunburst(selection) { // selection = element, data = dataset
     // generate chart here, using `width` and `height`
   }
 
-  my.width = function(value) {
+  mySunburst.width = function(value) {
     if (!arguments.length) return width;
     width = value;
     return my;
   };
 
-  my.height = function(value) {
+  mySunburst.height = function(value) {
     if (!arguments.length) return height;
     height = value;
     return my;
   };
 
-  return my;
+  return mySunburst;
 };
