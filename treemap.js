@@ -8,16 +8,25 @@ var chartWrapper = d3.select('#my-div')
 
 // Information on treemap from https://bl.ocks.org/mbostock/4063582
 
-// Skeleton
 function treemap() {
   // Set defaults
   var width = 800; 
   var height = 800; 
+  var colorScale = d3.scaleOrdinal(d3.schemeCategory10) // Sets to preset scale from D3 as default
 
   function myTreemap(selection) { // selection = element, data = dataset
     selection.each(function(data) {
-
+      var svg = d3.select(this).selectAll("svg").data([data])
+      
     })
+  }
+
+  myTreemap.margin = function(value) {
+    if(!arguments.length) {
+      return margin;
+    }
+    margin = value;
+    return myTreemap;
   }
 
   myTreemap.width = function(value) {
@@ -35,6 +44,22 @@ function treemap() {
     height = value;
     return myTreemap;
   };
+
+  myTreemap.colors = function(value) {
+    if(!arguments.length) {
+      return colorScale.range();
+    }
+    colorScale.range(value);
+    return myTreemap
+  }
+
+  myTreemap.categories = function(value) {
+    if(!arguments.length) {
+      return colorScale.domain();
+    }
+    colorScale.domain(value);
+    return myTreemap
+  }
 
   return myTreemap;
 };
