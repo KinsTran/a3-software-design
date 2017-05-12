@@ -1,11 +1,12 @@
 "use strict"
 $(function() {
+    d3.csv("data/sp500.csv", function(error, data) {
+        
+        var myChart = yScaleLogChart();
 
+        var chartWrapper = d3.select('#vis')
+                        .datum([dataSet]) 
+                        .call(myChart); 
+
+    })
 })
-// Outline of how to render in outside classes
-var myChart = chart().param1(value1).param2(value2);
-
-var chartWrapper = d3.select('#vis')
-                .datum([dataSet]) 
-                .call(myChart); 
-

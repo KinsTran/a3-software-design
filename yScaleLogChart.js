@@ -12,14 +12,15 @@ function yScaleLogChart() {
   }
   var width = 900; 
   var height = 560; 
-  var x = d3.scaleTime().rangeRound([0, width]);
-  var y = d3.scaleLog().range([height, 0]);
+  var xScale = d3.scaleTime().rangeRound([0, width]);
+  var yScale = d3.scaleLog().range([height, 0]);
+  var xAxis = d3.axisBottom().scale(xScale).tickSize(6, 0);
+  var yAxis = d3.axisLeft(yScale)
   var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
   var lineWidth = 1.5 
 
   function myChart(selection) { // selection = element, data = dataset
     selection.each(function(data) {
-      var svg = d3.select(this).selectAll("svg").data([data])
       // Convert data to standard representation greedily;
       // this is needed for nondeterministic accessors.
       data = data.map(function(d, i) {
@@ -39,10 +40,28 @@ function yScaleLogChart() {
       var svg = d3.select(this).selectAll("svg").data([data]);
 
       // Otherwise, create the skeletal chart.
-      var g = svg.enter().append("svg").append("g");
-      g.append("path").attr("class", "area");
-      g.append("path").attr("class", "line");
-      g.append("g").attr("class", "x axis");
+      var gEnter = svg.enter().append("svg").append("g"); // Only occurs if there is an svg that must be appended
+      gEnter.append("path").attr("class", "area");
+      gEnter.append("path").attr("class", "line");
+      gEnter.append("g").attr("class", "x axis");
+
+
+      // Update the outer dimensions.
+      svg.attr("width", width)
+          .attr("height", height);
+
+      // Update the area path.
+      g.select(".area")
+          .attr("d", area.y0(yScale.range()[0]));
+
+      // Update the line path.
+      g.select(".line")
+          .attr("d", line);
+
+      // Update the x-axis.
+      g.select(".x.axis")
+          .attr("transform", "translate(0," + yScale.range()[0] + ")")
+          .call(xAxis);
   }
 
   myChart.margin = function(value) {
