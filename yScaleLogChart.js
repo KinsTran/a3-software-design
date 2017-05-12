@@ -1,16 +1,9 @@
 "use strict"
-// Outline of how to render in outside classes
-/*var myChart = chart().param1(value1).param2(value2);
-
-var chartWrapper = d3.select('#my-div')
-                .datum([dataSet]) 
-                .call(myChart); 
-*/
 
 // Code from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec used heavily
 
 function yScaleLogChart() {
-  // Set arbitrary default values
+  // Set default values
   var margin = {
       top: 20,
       right: 20,
@@ -20,8 +13,8 @@ function yScaleLogChart() {
   var width = 900; 
   var height = 560; 
   var x = d3.scaleTime().rangeRound([0, width]);
-  var y = d3.scaleLog().rangeRound([height, 0]);
-  var color = "#228b22" 
+  var y = d3.scaleLog().range([height, 0]);
+  var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
   var lineWidth = 1.5 
 
   function myChart(selection) { // selection = element, data = dataset
@@ -39,7 +32,7 @@ function yScaleLogChart() {
 
       // Update the y-scale.
       yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
-          .rangeRound([height, 0]);
+          .range([height, 0]);
     })
   }
 
