@@ -19,7 +19,7 @@ function yScaleLogChart() {
   var xValue = function(d){return d[0]} // Values by default are set to first two values in array
   var yValue = function(d){return d[1]}
   var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
-  var line = d3.line().x(xValue).y(yValue)
+  var line = d3.line().x(X).y(Y) // Possibly change to xValue yValue
   var lineWidth = 1.5 
 
   function myChart(selection) { // selection = element, data = dataset
@@ -32,25 +32,23 @@ function yScaleLogChart() {
       
       // Update the x-scale.
       xScale.domain(d3.extent(data, function(d) { return d[0]; }))
-          .rangeRound([0, width]);
+          .rangeRound([0, width - margin.left - margin.right]);
 
       // Update the y-scale.
       yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
-          .range([height, 0]);
+          .range([height - margin.top - margin.bottom, 0]);
 
       // Select the svg element, if it exists.
-      var svg = d3.select(this).selectAll("svg").data([data]);
-
+      var svg = d3.select(this).selectAll("svg").data([data])
       // Otherwise, create the skeletal chart.
       var gEnter = svg.enter().append("svg").append("g"); // Only occurs if there is an svg that must be appended
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
-
       // Update the outer dimensions.
       svg.attr("width", width)
-          .attr("height", height);
-
+          .attr("height", height)
+      
       // Update the inner dimensions.
       var g = svg.select("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -71,7 +69,7 @@ function yScaleLogChart() {
 
         // Update the y-axis.
       g.select(".y.axis")
-          .attr("transform", "translate(" + xScale.range()[0] + ", 0)")
+          .attr("transform", "translate(" + xScale.range()[1] + ", 0)")
           .call(yAxis);
       })
   }
@@ -128,6 +126,16 @@ function yScaleLogChart() {
     yValue = value;
     return myChart;
   };
+
+  // The x-accessor for the path generator; xScale ∘ xValue.
+  function X(d) {
+    return xScale(d[0]);
+  }
+
+  // The x-accessor for the path generator; yScale ∘ yValue.
+  function Y(d) {
+    return yScale(d[1]);
+  }
 
   return myChart;
 };
