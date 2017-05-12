@@ -26,10 +26,10 @@ function yScaleLogChart() {
     selection.each(function(data) {
       // Convert data to standard representation greedily;
       // this is needed for nondeterministic accessors.
-      data = data.map(function(d, i) {
+      data = data.map(function(d, i) { // Maps every x,y pair into an array
         return [xValue.call(data, d, i), yValue.call(data, d, i)];
       });
-
+      
       // Update the x-scale.
       xScale.domain(d3.extent(data, function(d) { return d[0]; }))
           .rangeRound([0, width]);
@@ -45,6 +45,7 @@ function yScaleLogChart() {
       var gEnter = svg.enter().append("svg").append("g"); // Only occurs if there is an svg that must be appended
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
+      gEnter.append("g").attr("class", "y axis");
 
       // Update the outer dimensions.
       svg.attr("width", width)
@@ -58,8 +59,8 @@ function yScaleLogChart() {
       g.select(".line")
         .attr("fill", "none")
         .attr("stroke", color)
- //       .attr("stroke-linejoin", "round")
- //       .attr("stroke-linecap", "round")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
         .attr("stroke-width", lineWidth)
         .attr("d", line);
 
