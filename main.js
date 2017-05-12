@@ -5,7 +5,7 @@ $(function() {
         var myChart = yScaleLogChart();
 
         var chartWrapper = d3.select('#vis')
-                        .datum([dataSet]) 
+                        .datum(data) 
                         .call(myChart); 
 
 /*var chart = timeSeriesChart()

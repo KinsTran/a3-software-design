@@ -36,7 +36,6 @@ function yScaleLogChart() {
       // Update the y-scale.
       yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
           .range([height, 0]);
-    })
 
       // Select the svg element, if it exists.
       var svg = d3.select(this).selectAll("svg").data([data]);
@@ -52,6 +51,10 @@ function yScaleLogChart() {
       svg.attr("width", width)
           .attr("height", height);
 
+      // Update the inner dimensions.
+      var g = svg.select("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
       // Update the area path.
       g.select(".area")
           .attr("d", area.y0(yScale.range()[0]));
@@ -64,6 +67,12 @@ function yScaleLogChart() {
       g.select(".x.axis")
           .attr("transform", "translate(0," + yScale.range()[0] + ")")
           .call(xAxis);
+
+        // Update the x-axis.
+      g.select(".y.axis")
+          .attr("transform", "translate(" + xScale.range()[0] + ", 0)")
+          .call(yAxis);
+      })
   }
 
   myChart.margin = function(value) {
