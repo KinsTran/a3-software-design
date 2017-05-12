@@ -19,6 +19,7 @@ function yScaleLogChart() {
   var xValue = function(d){return d[0]} // Values by default are set to first two values in array
   var yValue = function(d){return d[1]}
   var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
+  var line = d3.line().x(xValue).y(yValue)
   var lineWidth = 1.5 
 
   function myChart(selection) { // selection = element, data = dataset
@@ -42,10 +43,8 @@ function yScaleLogChart() {
 
       // Otherwise, create the skeletal chart.
       var gEnter = svg.enter().append("svg").append("g"); // Only occurs if there is an svg that must be appended
-      gEnter.append("path").attr("class", "area");
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
-
 
       // Update the outer dimensions.
       svg.attr("width", width)
@@ -55,20 +54,21 @@ function yScaleLogChart() {
       var g = svg.select("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      // Update the area path.
-      g.select(".area")
-          .attr("d", area.y0(yScale.range()[0]));
-
       // Update the line path.
       g.select(".line")
-          .attr("d", line);
+        .attr("fill", "none")
+        .attr("stroke", color)
+ //       .attr("stroke-linejoin", "round")
+ //       .attr("stroke-linecap", "round")
+        .attr("stroke-width", lineWidth)
+        .attr("d", line);
 
       // Update the x-axis.
       g.select(".x.axis")
           .attr("transform", "translate(0," + yScale.range()[0] + ")")
           .call(xAxis);
 
-        // Update the x-axis.
+        // Update the y-axis.
       g.select(".y.axis")
           .attr("transform", "translate(" + xScale.range()[0] + ", 0)")
           .call(yAxis);
@@ -115,17 +115,17 @@ function yScaleLogChart() {
     return myChart
   }
 
-// The other parameters are optional, however these two are REQUIRED
-  myChart.xValue = function(_) {
+// The other parameters are optional, however these two are REQUIRED if there are more than two values in array
+  myChart.xValue = function(value) { // Probably better to conceptualize as columns
     if (!arguments.length) return xValue;
-    xValue = _;
-    return chart;
+    xValue = value;
+    return myChart;
   };
 
-  myChart.yValue = function(_) {
+  myChart.yValue = function(value) {
     if (!arguments.length) return yValue;
-    yValue = _;
-    return chart;
+    yValue = value;
+    return myChart;
   };
 
   return myChart;

@@ -1,6 +1,9 @@
 # Y Scale Log Chart
 An API for creating **Line Charts with log scaling on the Y axis** using d3 calls
 
+## References
+Most of the code is lifted from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec.
+
 ## Data preparation
 Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeParse()](https://github.com/d3/d3-time-format/blob/master/README.md#timeParse))
 
@@ -31,6 +34,3 @@ Specifies what colors to use, expects an _array of colors_. If no value is provi
 
 ### `chartName().lineWidth`
 Specifies the width of the line drawn, expects a single _integer_. If no value is provided, returns the current lineWidth.
-
-## PSA:
-This library is incomplete and bug-ridden. If an error occurs, it may be because of the library and not an error on the user's part. Please report any errors to **kinstran@uw.edu**.
