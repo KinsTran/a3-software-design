@@ -1,6 +1,6 @@
 "use strict"
 
-// Code from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec used heavily
+// Code from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec HEAVILY used
 
 function yScaleLogChart() {
   // Set default values
@@ -34,6 +34,15 @@ function yScaleLogChart() {
       yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
           .range([height, 0]);
     })
+
+      // Select the svg element, if it exists.
+      var svg = d3.select(this).selectAll("svg").data([data]);
+
+      // Otherwise, create the skeletal chart.
+      var g = svg.enter().append("svg").append("g");
+      g.append("path").attr("class", "area");
+      g.append("path").attr("class", "line");
+      g.append("g").attr("class", "x axis");
   }
 
   myChart.margin = function(value) {

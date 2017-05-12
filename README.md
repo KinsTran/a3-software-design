@@ -2,7 +2,7 @@
 An API for creating **Line Charts with log scaling on the Y axis** using d3 calls
 
 ## Data preparation
-Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeFormat()](https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat))
+Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeParse()](https://github.com/d3/d3-time-format/blob/master/README.md#timeParse))
 
 ## Usage details
 First, initialize the data using 
@@ -23,5 +23,5 @@ Specifies the height of the chart, expects a single _number_. If no value is pro
 ### `chartName().colors`
 Specifies what colors to use, expects an _array of colors_. If no value is provided, returns the current color scheme, which is defaulted to _d3.schemeCategory10_.
 
-##PSA:
+## PSA:
 This library is incomplete and bug-ridden. If an error occurs, it may be because of the library and not an error on the user's part.
