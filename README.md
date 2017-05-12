@@ -8,7 +8,7 @@ Most of the code is lifted from https://bl.ocks.org/mbostock/3883245 and https:/
 Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeParse()](https://github.com/d3/d3-time-format/blob/master/README.md#timeParse))
 
 ## Usage details
-First, copy paste the following into your header:
+First, **copy paste the following** into your head:
 ```
 <script src="https://d3js.org/d3.v4.js"></script> // Only if you are not already using d3
 <script src="yScaleLogChart.js"></script>

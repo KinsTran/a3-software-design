@@ -39,16 +39,18 @@ function yScaleLogChart() {
           .range([height - margin.top - margin.bottom, 0]);
 
       // Select the svg element, if it exists.
-      var svg = d3.select(this).selectAll("svg").data([data])
+      var svg = d3.select(this).selectAll("svg").data([data]).enter().append("svg")
       // Otherwise, create the skeletal chart.
-      var gEnter = svg.enter().append("svg").append("g"); // Only occurs if there is an svg that must be appended
+      var gEnter = svg.append("g"); // Only occurs if there is an svg that must be appended
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
+      
       // Update the outer dimensions.
       svg.attr("width", width)
           .attr("height", height)
-      
+
+      console.log(d3.select(this).selectAll("svg"))
       // Update the inner dimensions.
       var g = svg.select("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -115,7 +117,7 @@ function yScaleLogChart() {
   }
 
 // The other parameters are optional, however these two are REQUIRED if there are more than two values in array
-  myChart.xValue = function(value) { // Probably better to conceptualize as columns
+  myChart.xValue = function(value) { // Probably better to think of them as columns
     if (!arguments.length) return xValue;
     xValue = value;
     return myChart;
