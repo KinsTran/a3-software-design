@@ -16,6 +16,8 @@ function yScaleLogChart() {
   var yScale = d3.scaleLog().range([height, 0]);
   var xAxis = d3.axisBottom().scale(xScale).tickSize(6, 0);
   var yAxis = d3.axisLeft(yScale)
+  var xValue = function(d){return d[0]} // Values by default are set to first two values in array
+  var yValue = function(d){return d[1]}
   var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
   var lineWidth = 1.5 
 
@@ -104,14 +106,18 @@ function yScaleLogChart() {
     return myChart
   }
 
-  // Accessor functions that DO NOT update, but will return a value if given appropriate input
-  function X(d) { // POSSIBLY REMOVE
-    return xScale(d[0]);
-  }
+// The other parameters are optional, however these two are REQUIRED
+  myChart.xValue = function(_) {
+    if (!arguments.length) return xValue;
+    xValue = _;
+    return chart;
+  };
 
-  function Y(d) {
-    return yScale(d[1]);
-  }
+  myChart.yValue = function(_) {
+    if (!arguments.length) return yValue;
+    yValue = _;
+    return chart;
+  };
 
   return myChart;
 };
