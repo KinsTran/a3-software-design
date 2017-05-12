@@ -8,7 +8,13 @@ Most of the code is lifted from https://bl.ocks.org/mbostock/3883245 and https:/
 Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeParse()](https://github.com/d3/d3-time-format/blob/master/README.md#timeParse))
 
 ## Usage details
-First, initialize the data using the above in whatever date format of your choosing. Then, begin the chart using `var chartName = yScaleLogChart().xValue(function).yValue(function)`. The xValue and yValue functions are only required **if the data passed in has more than just the two values of interest**. You can then assign _attributes_ to the chart with the other methods.
+First, copy paste the following into your header:
+```
+<script src="https://d3js.org/d3.v4.js"></script> // Only if you are not already using d3
+<script src="yScaleLogChart.js"></script>
+```
+
+Then, initialize the data using the above data preparation technique in whatever date format of your choosing. After that, begin the chart using `var chartName = yScaleLogChart().xValue(function).yValue(function)`. The xValue and yValue functions are only required **if the data passed in has more than just the two values of interest**. You can then assign _attributes_ to the chart with the other methods.
 
 ## Methods
 ### `yScaleLogChart()`
