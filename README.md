@@ -2,7 +2,7 @@
 An API for creating **Line Charts with log scaling on the Y axis** using d3 calls
 
 ## References
-Most of the code is lifted from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec.
+Most of the code is lifted from https://bl.ocks.org/mbostock/3883245 and https://bl.ocks.org/curran/66d926fe73211fd650ec. Smaller sources are referenced in code
 
 ## Data preparation
 Data must be passed in with the form **(time, value)**. Make sure your times are properly formatted! ([d3.timeParse()](https://github.com/d3/d3-time-format/blob/master/README.md#timeParse))
@@ -12,6 +12,7 @@ First, **copy paste the following** into your head:
 ```
 <script src="https://d3js.org/d3.v4.js"></script> // Only if you are not already using d3
 <script src="yScaleLogChart.js"></script>
+<link href="yScaleLogChart.css" rel="stylesheet" type="text/css" />
 ```
 
 Then, initialize the data using the above data preparation technique in whatever date format of your choosing. After that, begin the chart using `var chartName = yScaleLogChart().xValue(function).yValue(function)`. The xValue and yValue functions are only required **if the data passed in has more than just the two values of interest**. You can then assign _attributes_ to the chart with the other methods.
@@ -40,3 +41,12 @@ Specifies what colors to use, expects an _array of colors_. If no value is provi
 
 ### `chartName().lineWidth`
 Specifies the width of the line drawn, expects a single _integer_. If no value is provided, returns the current lineWidth.
+
+### `chartName().title`
+Specifies the title of the chart, expects a _string_. Returns the current title if no value is provided, defaulted to an empty string.
+
+### `chartName().xAxisLabel`
+Specifies the x Axis of the chart, expects a _string_. Returns the current x axis label if no value is provided, defaulted to an empty string.
+
+### `chartName().yAxisLabel`
+Specifies the y Axis of the chart, expects a _string_. Returns the current y axis label if no value is provided, defaulted to an empty string.

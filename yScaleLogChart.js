@@ -14,13 +14,16 @@ function yScaleLogChart() {
   var height = 560; 
   var xScale = d3.scaleTime().rangeRound([0, width]);
   var yScale = d3.scaleLog().range([height, 0]);
-  var xAxis = d3.axisBottom().scale(xScale).tickSize(6, 0);
-  var yAxis = d3.axisLeft(yScale)
+  var xAxis = d3.axisBottom(xScale);
+  var yAxis = d3.axisLeft(yScale).ticks(20, "") // https://bl.ocks.org/mbostock/5537697 for log scale ticks
   var xValue = function(d){return d[0]} // Values by default are set to first two values in array
   var yValue = function(d){return d[1]}
   var color = "#228b22" // This one is more arbitrary than the other defaults: I just like dark green
-  var line = d3.line().x(X).y(Y) // Possibly change to xValue yValue
+  var line = d3.line().x(X).y(Y)  // Alternatively you can think of it as being dark green to represent money since many line charts plot time vs money
   var lineWidth = 1.5 
+  var title = ""
+  var xAxisLabel = ""
+  var yAxisLabel = ""
 
   function myChart(selection) { // selection = element, data = dataset
     selection.each(function(data) {
@@ -35,9 +38,9 @@ function yScaleLogChart() {
           .rangeRound([0, width - margin.left - margin.right]);
 
       // Update the y-scale.
-      yScale.domain([0, d3.max(data, function(d) { return d[1]; })])
-          .range([height - margin.top - margin.bottom, 0]);
-
+      yScale.domain([d3.min(data, function(d) {return d[1] / 2}), d3.max(data, function(d) { return d[1]; })]) // Makes sure graph is always scaled to minimum and maximums of the graph
+          .range([height - margin.top - margin.bottom, 0]) // If I scaled to just minimum, it would be potentially misleading: if I always scaled to 0.1, the graph would at times be too big
+          // Compromise by scaling to d[1] / 2, to show more of the graph, indicating it's log, while still cutting out some unneccesary portion
       // Select the svg element, if it exists.
       var svg = d3.select(this).selectAll("svg").data([data]).enter().append("svg")
       // Otherwise, create the skeletal chart.
@@ -50,7 +53,6 @@ function yScaleLogChart() {
       svg.attr("width", width)
           .attr("height", height)
 
-      console.log(d3.select(this).selectAll("svg"))
       // Update the inner dimensions.
       var g = svg.select("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -62,17 +64,35 @@ function yScaleLogChart() {
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", lineWidth)
-        .attr("d", line);
+        .attr("d", line)
+        .append("div") // Tooltips from http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
+        .attr("class", "tooltip") // NEED TO FINISH
+        .style("opacity", 0)
+        .on("mouseover", function(d) { 
+          this.transition()
+                .duration(200)
+                .style("opacity", .9);	
+        })
+        .on("mouseout", function(d) {
+           this.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+        })
 
       // Update the x-axis.
       g.select(".x.axis")
           .attr("transform", "translate(0," + yScale.range()[0] + ")")
-          .call(xAxis);
+          .call(xAxis)
+          .append("text")
+          .attr("class", "label")
+          .text(xAxisLabel)
 
         // Update the y-axis.
       g.select(".y.axis")
-          .attr("transform", "translate(" + xScale.range()[1] + ", 0)")
-          .call(yAxis);
+          .call(yAxis)
+          .append("text")
+          .attr("class", "label")
+          .text(yAxisLabel)
       })
   }
 
@@ -115,6 +135,32 @@ function yScaleLogChart() {
     lineWidth = value;
     return myChart
   }
+
+  myChart.title = function(value) {
+    if(!arguments.length) {
+      return title;
+    }
+    title = value;
+    return myChart;
+  }
+
+  myChart.xAxisLabel = function(value) {
+    if(!arguments.length) {
+      return xAxisLabel;
+    }
+    xAxisLabel = value;
+    return myChart;
+  }
+
+  myChart.yAxisLabel = function(value) {
+    if(!arguments.length) {
+      return yAxisLabel;
+    }
+    yAxisLabel = value;
+    return myChart;
+  }
+
+  
 
 // The other parameters are optional, however these two are REQUIRED if there are more than two values in array
   myChart.xValue = function(value) { // Probably better to think of them as columns
