@@ -45,8 +45,8 @@ Specifies the width of the line drawn, expects a single _integer_. If no value i
 ### `chartName().title`
 Specifies the title of the chart, expects a _string_. Returns the current title if no value is provided, defaulted to an empty string.
 
-### `chartName().xAxisLabel`
-Specifies the x Axis of the chart, expects a _string_. Returns the current x axis label if no value is provided, defaulted to an empty string.
+### `chartName().xAxisTitle`
+Specifies the x Axis of the chart, expects a _string_. Returns the current x axis title if no value is provided, defaulted to an empty string.
 
-### `chartName().yAxisLabel`
-Specifies the y Axis of the chart, expects a _string_. Returns the current y axis label if no value is provided, defaulted to an empty string.
+### `chartName().yAxisTitle`
+Specifies the y Axis of the chart, expects a _string_. Returns the current y axis title if no value is provided, defaulted to an empty string.

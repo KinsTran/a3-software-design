@@ -5,10 +5,10 @@
 function yScaleLogChart() {
   // Set default values
   var margin = {
-      top: 20,
+      top: 50,
       right: 20,
-      bottom: 30,
-      left: 50
+      bottom: 100,
+      left: 100
   }
   var width = 900; 
   var height = 560; 
@@ -22,8 +22,8 @@ function yScaleLogChart() {
   var line = d3.line().x(X).y(Y)  // Alternatively you can think of it as being dark green to represent money since many line charts plot time vs money
   var lineWidth = 1.5 
   var title = ""
-  var xAxisLabel = ""
-  var yAxisLabel = ""
+  var xAxisTitle = ""
+  var yAxisTitle = ""
 
   function myChart(selection) { // selection = element, data = dataset
     selection.each(function(data) {
@@ -48,6 +48,21 @@ function yScaleLogChart() {
       gEnter.append("path").attr("class", "line");
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
+
+      gEnter.append("text").attr("class", "title")
+        .attr("transform", "translate(" + width / 3 + ", -20)")
+        .style("text-anchor", "middle")
+        .text(title)
+
+      gEnter.append("text").attr("class", "title")
+          .attr("transform", "translate(" + width / 3 + ","  + (height - margin.bottom) + ")")
+          .style("text-anchor", "middle")
+          .text(xAxisTitle)
+
+      gEnter.append("text").attr("class", "title")
+          .attr("transform", "rotate(-90) translate(" + -(height / 3) + ", -40)")
+          .style("text-anchor", "middle")
+          .text(yAxisTitle)
       
       // Update the outer dimensions.
       svg.attr("width", width)
@@ -55,7 +70,7 @@ function yScaleLogChart() {
 
       // Update the inner dimensions.
       var g = svg.select("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
       // Update the line path.
       g.select(".line")
@@ -83,16 +98,10 @@ function yScaleLogChart() {
       g.select(".x.axis")
           .attr("transform", "translate(0," + yScale.range()[0] + ")")
           .call(xAxis)
-          .append("text")
-          .attr("class", "label")
-          .text(xAxisLabel)
 
         // Update the y-axis.
       g.select(".y.axis")
           .call(yAxis)
-          .append("text")
-          .attr("class", "label")
-          .text(yAxisLabel)
       })
   }
 
@@ -144,19 +153,19 @@ function yScaleLogChart() {
     return myChart;
   }
 
-  myChart.xAxisLabel = function(value) {
+  myChart.xAxisTitle = function(value) {
     if(!arguments.length) {
-      return xAxisLabel;
+      return xAxisTitle;
     }
-    xAxisLabel = value;
+    xAxisTitle = value;
     return myChart;
   }
 
-  myChart.yAxisLabel = function(value) {
+  myChart.yAxisTitle = function(value) {
     if(!arguments.length) {
-      return yAxisLabel;
+      return yAxisTitle;
     }
-    yAxisLabel = value;
+    yAxisTitle = value;
     return myChart;
   }
 
