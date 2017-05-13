@@ -14,3 +14,7 @@ div.tooltip {
   font-size: 16px;
   font-family: sans-serif;
 }
+
+.overlay {
+    opacity: 0;
+}

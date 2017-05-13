@@ -17,6 +17,8 @@ First, **copy paste the following** into your head:
 
 Then, initialize the data using the above data preparation technique in whatever date format of your choosing. After that, begin the chart using `var chartName = yScaleLogChart().xValue(function).yValue(function)`. The xValue and yValue functions are only required **if the data passed in has more than just the two values of interest**. You can then assign _attributes_ to the chart with the other methods.
 
+Finally, pass the chart into a d3 call in the form of `d3.select(element).datum(data).call(chartName);`
+
 ## Methods
 ### `yScaleLogChart()`
 The initial constructor. Creates a **chart** object to use with d3's call function. 

@@ -50,20 +50,20 @@ function yScaleLogChart() {
       gEnter.append("g").attr("class", "y axis");
 
       gEnter.append("text").attr("class", "title")
-        .attr("transform", "translate(" + width / 3 + ", -20)")
-        .style("text-anchor", "middle")
-        .text(title)
+            .attr("transform", "translate(" + width / 3 + ", -20)")
+            .style("text-anchor", "middle")
+            .text(title)
 
       gEnter.append("text").attr("class", "title")
-          .attr("transform", "translate(" + width / 3 + ","  + (height - margin.bottom) + ")")
-          .style("text-anchor", "middle")
-          .text(xAxisTitle)
+            .attr("transform", "translate(" + width / 3 + ","  + (height - margin.bottom) + ")")
+            .style("text-anchor", "middle")
+            .text(xAxisTitle)
 
       gEnter.append("text").attr("class", "title")
-          .attr("transform", "rotate(-90) translate(" + -(height / 3) + ", -40)")
-          .style("text-anchor", "middle")
-          .text(yAxisTitle)
-      
+            .attr("transform", "rotate(-90) translate(" + -(height / 3) + ", -40)")
+            .style("text-anchor", "middle")
+            .text(yAxisTitle)
+
       // Update the outer dimensions.
       svg.attr("width", width)
           .attr("height", height)
@@ -80,19 +80,6 @@ function yScaleLogChart() {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", lineWidth)
         .attr("d", line)
-        .append("div") // Tooltips from http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
-        .attr("class", "tooltip") // NEED TO FINISH
-        .style("opacity", 0)
-        .on("mouseover", function(d) { 
-          this.transition()
-                .duration(200)
-                .style("opacity", .9);	
-        })
-        .on("mouseout", function(d) {
-           this.transition()		
-                .duration(500)		
-                .style("opacity", 0);	
-        })
 
       // Update the x-axis.
       g.select(".x.axis")
@@ -168,8 +155,6 @@ function yScaleLogChart() {
     yAxisTitle = value;
     return myChart;
   }
-
-  
 
 // The other parameters are optional, however these two are REQUIRED if there are more than two values in array
   myChart.xValue = function(value) { // Probably better to think of them as columns
